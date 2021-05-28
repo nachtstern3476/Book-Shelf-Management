@@ -47,7 +47,8 @@ function createBookItem(judul, penulis, tahun, isReaded, isSearch=false) {
 			text.innerText = "Belum Dibaca"
 			container.append(text)
 		}else{			
-			container.append(createCheckButton())
+			buttonContainer.append(createCheckButton(), createDeleteButton())
+			container.append(buttonContainer)
 		}
 	}
 
@@ -72,17 +73,17 @@ function addNewBook() {
 
 function addReadedBook(bookElement) {
 	const readedContainer = document.getElementById(READED_BOOKS)
-	const judulBuku = bookElement.querySelector(".inner > h3").innerText
-	const penulisBuku = bookElement.querySelector(".inner > p:nth-child(even) > span").innerText
-	const tahunBuku = bookElement.querySelector(".inner > p:nth-child(odd) > span").innerText
+	const judulBuku = bookElement.parentElement.querySelector(".inner > h3").innerText
+	const penulisBuku = bookElement.parentElement.querySelector(".inner > p:nth-child(even) > span").innerText
+	const tahunBuku = bookElement.parentElement.querySelector(".inner > p:nth-child(odd) > span").innerText
 
 	const bookItem = createBookItem(judulBuku, penulisBuku, tahunBuku, true)
-	const book = findBook(bookElement[BOOK_ID])
+	const book = findBook(bookElement.parentElement[BOOK_ID])
 	bookItem[BOOK_ID] = book.id
 	book.isReaded = true
 
 	readedContainer.append(bookItem)
-	bookElement.remove()
+	bookElement.parentElement.remove()
 
 	updateBook()
 }
